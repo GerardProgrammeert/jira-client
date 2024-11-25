@@ -1,0 +1,28 @@
+{
+    "name": "beezmaster/jira-client",
+    "description": "Jira API client",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "laravel/framework": ">=11.0"
+    },
+    "license": "MIT",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Beezmaster\\JiraClient\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gerard van Hattem",
+            "email": "gwjvanhattem@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Beezmaster\\JiraClient\\JiraServiceProvider"
+            ]
+        }
+    }
+}
