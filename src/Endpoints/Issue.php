@@ -10,17 +10,18 @@ use Beezmaster\JiraClient\Request;
 use Beezmaster\JiraClient\RequestPayload\IssueRequestPayload;
 use Beezmaster\JiraClient\ResponsePayload\AbstractResponsePayload;
 use GuzzleHttp\Psr7\Response;
+use Beezmaster\JiraClient\Response as JiraResponse;
 
 final class Issue extends BaseEndpoint
 {
     public const BASE_ENDPOINT = '/issue';
 
-    public function all(): Response
+    public function all(): JiraResponse
     {
         return $this->client->makeRequest(HttpMethod::GET, self::BASE_ENDPOINT . '/');
     }
 
-    public function get(array $pathVariables): Response
+    public function get(array $pathVariables): JiraResponse
     {
         $url = self::BASE_ENDPOINT . '/%s';
 
@@ -28,7 +29,7 @@ final class Issue extends BaseEndpoint
         return $this->client->makeRequest((new Request('GET', $url, $payload, $pathVariables, $query)));
     }
 
-    public function post(IssueRequestPayload $payload): AbstractResponsePayload
+    public function post(IssueRequestPayload $payload): JiraResponse
     {
         return $this->client->makeRequest(
             (new Request(HttpMethod::POST, self::BASE_ENDPOINT, null, $payload))

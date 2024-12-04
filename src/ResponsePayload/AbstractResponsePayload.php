@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Beezmaster\JiraClient\ResponsePayload;
 
-abstract class AbstractResponsePayload
+readonly abstract class AbstractResponsePayload
 {
     abstract public function toArray(): array;
 

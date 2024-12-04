@@ -6,18 +6,23 @@ namespace Beezmaster\JiraClient;
 
 use Beezmaster\JiraClient\Exceptions\JiraClientBadRequest;
 use Beezmaster\JiraClient\Exceptions\JiraClientServerException;
+use Beezmaster\JiraClient\ResponsePayload\AbstractResponsePayload;
+use Beezmaster\JiraClient\ResponsePayload\ResponsePayloadFactory;
 use Psr\Http\Message\ResponseInterface;
 
 class Response
 {
-    public function __construct(private readonly ResponseInterface $response)
+    public function __construct(
+        private readonly Request $request,
+        private readonly ResponseInterface $response,
+    )
     {
         $this->handleStatus();
     }
 
-    public function getResponsePayload(): void
+    public function getResponsePayload(): AbstractResponsePayload
     {
-        //todo create payload with a Factory for a Response payload
+        return ResponsePayloadFactory::create($this->request, $this->response);
     }
 
     public function getBody()
