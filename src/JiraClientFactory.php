@@ -6,16 +6,15 @@ namespace Beezmaster\JiraClient;
 
 use Beezmaster\JiraClient\Middleware\ResponseLoggingMiddleware;
 use GuzzleHttp\Client;
-use Beezmaster\JiraClient\AbstractJiraClient;
 use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Str;
-use Storage;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
-class JiraClientFactory {
-
+class JiraClientFactory
+{
     public static function create(): JiraClient
     {
         $client = new Client(self::settings());
@@ -26,9 +25,9 @@ class JiraClientFactory {
     private static function settings(): array
     {
         return [
-            'auth' => [config('jira.user_name'), config('jira.api_key')],
+            'auth'     => [config('jira.user_name'), config('jira.api_key')],
             'base_uri' => config('jira.base_api_url'),
-            'handler' => self::getStack(),
+            'handler'  => self::getStack(),
         ];
     }
 
@@ -63,10 +62,9 @@ class JiraClientFactory {
     {
         $parts = [];
         $parts['method'] = $request->getMethod();
-        $parts['endpoint'] = Str::of($request->getUri(), '/rest/api/3/')->replace('/','_');
+        $parts['endpoint'] = Str::of($request->getUri(), '/rest/api/3/')->replace('/', '_');
         $parts['suffix'] = time();
-        $fileName = Str::studly(Str::lower(implode('_',$parts))) . '.json';
 
-        return $fileName;
+        return Str::studly(Str::lower(implode('_', $parts))) . '.json';
     }
 }

@@ -6,11 +6,9 @@ namespace Beezmaster\JiraClient;
 
 use Beezmaster\JiraClient\Exceptions\JiraClientBadRequest;
 use Beezmaster\JiraClient\Exceptions\JiraClientServerException;
-use Beezmaster\JiraClient\ResponsePayload\AbstractResponsePayload;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
-class Response implements ResponseInterface
+class Response
 {
     public function __construct(private readonly ResponseInterface $response)
     {
@@ -32,11 +30,6 @@ class Response implements ResponseInterface
         return $this->response->getStatusCode();
     }
 
-    public function withStatus(int $code, string $reasonPhrase = ''): ResponseInterface
-    {
-        return $this->withStatus($code, $reasonPhrase);
-    }
-
     public function getReasonPhrase(): string
     {
         return $this->response->getReasonPhrase();
@@ -50,23 +43,21 @@ class Response implements ResponseInterface
     public function toArray(): array
     {
         $body = (string) $this->response->getBody();
+
         return json_decode($body, true) ?? [];
     }
 
     private function handleStatus(): void
     {
-        if (!config('jira.raise_exception'))
-        {
-            return; 
+        if (!config('jira.raise_exception')) {
+            return;
         }
-        
+
         $statusCode = $this->getStatusCode();
 
         match (true) {
-            $statusCode >= 400 && $statusCode <= 499 => throw new JiraClientBadRequest($this->get,
+            $statusCode >= 400 && $statusCode <= 499 => throw new JiraClientBadRequest($this->response),
             $statusCode >= 500 && $statusCode <= 599 => throw new JiraClientServerException(),
         };
-
-        return;
     }
 }

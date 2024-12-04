@@ -1,0 +1,14 @@
+parameters:
+    level: 5
+
+    tmpDir: /tmp/phpstan # https://phpstan.org/user-guide/result-cache
+
+    paths:
+        - ../../src/
+
+    excludePaths:
+        - ../../vendor/
+
+    ignoreErrors:
+        - '#PHPDoc tag \@var above a method has no effect\.#'
+        - '#Method Paqtcom\\Simplicate\\Endpoint\\[a-zA-Z0-9\\_]+\:\:[a-zA-Z0-9\\_]+\(\) should return Paqtcom\\Simplicate\\Model\\[a-zA-Z0-9\\_]+\|null but return statement is missing\.#'

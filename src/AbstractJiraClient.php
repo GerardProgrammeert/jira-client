@@ -6,10 +6,6 @@ namespace Beezmaster\JiraClient;
 
 use Beezmaster\JiraClient\Endpoints\Issue;
 use Beezmaster\JiraClient\Endpoints\Project;
-use Beezmaster\JiraClient\Enums\HttpMethod;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractJiraClient
 {
