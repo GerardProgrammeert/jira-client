@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Response;
 
 final class Project extends BaseEndpoint
 {
-    const BASE_ENDPOINT = '/project';
+    public const BASE_ENDPOINT = '/project';
 
     public function all(): void
     {

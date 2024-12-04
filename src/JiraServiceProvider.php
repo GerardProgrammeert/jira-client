@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Beezmaster\JiraClient;
 
-use BeezMaster\JiraClient\AbstractJiraClient;
-use Beezmaster\JiraClient\JiraClient;
-use BeezMaster\JiraClient\JiraClientFactory;
-use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class JiraServiceProvider extends ServiceProvider

@@ -13,18 +13,17 @@ use GuzzleHttp\RequestOptions;
 final class Request
 {
     public function __construct(
-        private HttpMethod $method,
-        private string $endpoint,
+        private readonly HttpMethod $method,
+        private readonly string $endpoint,
         private $path = [],
-        private ?AbstractRequestPayload $payload = null)
-    {
+        private readonly ?AbstractRequestPayload $payload = null
+    ) {
     }
 
     public function getUrl(): string
     {
         $endpoint = '/rest/api/3' . $this->endpoint;
-        if (empty($this->path))
-        {
+        if (empty($this->path)) {
             return $endpoint;
         }
 
@@ -39,7 +38,7 @@ final class Request
     private function getHeaders(array $headers = []): array
     {
         $defaultHeaders = [
-            'Accept' => 'application/json',
+            'Accept'       => 'application/json',
             'Content-Type' => 'application/json',
         ];
 
@@ -48,12 +47,10 @@ final class Request
 
     public function getOptions(array $headers = []): array
     {
-        $array = [
+        return [
             RequestOptions::HEADERS => $this->getHeaders($headers),
-            RequestOptions::JSON => $this->payload->toArray(),
-            RequestOptions::DEBUG => config('jira.debug'),
+            RequestOptions::JSON    => $this->payload->toArray(),
+            RequestOptions::DEBUG   => config('jira.debug'),
         ];
-
-        return $array;
     }
 }

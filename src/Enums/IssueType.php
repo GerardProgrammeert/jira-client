@@ -8,4 +8,3 @@ enum IssueType: string
     case TASK = 'Task';
     case STORY = 'Story';
 }
-
