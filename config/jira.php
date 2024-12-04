@@ -7,5 +7,5 @@ return [
     'log_request' => env('JIRA_LOG_REQUEST', false),
     'log_response' => env('JIRA_LOG_RESPONSE', false),
     'debug' => env('JIRA_DEBUG', false),
-    'raise_exceptoin' => env('JIRA_RAISE_EXCEPTION', true), //throws exception base on status code
+    'raise_exception' => env('JIRA_RAISE_EXCEPTION', true), //throws exception base on status code
 ];

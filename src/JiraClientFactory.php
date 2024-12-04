@@ -41,20 +41,20 @@ class JiraClientFactory {
         $stack->setHandler($handler);
 
         //logging
-        // if (config('jira.log_request')) {
-        //     $logRequestMiddleware = Middleware::mapRequest(function (Request $request) {
-        //         $fileName = self::getRequestFileName($request);
-        //         Storage::put('/jira-client/requests/' . $fileName, $request->getBody()->getContents());
-        //
-        //         return $request;
-        //     });
-        //     $stack->push($logRequestMiddleware);
-        // }
-        //
-        // if (config('jira.log_response')) {
-        //     $logResponseMiddleware = ResponseLoggingMiddleware::logResponse();
-        //     $stack->push($logRequestMiddleware);
-        // }
+        if (config('jira.log_request')) {
+            $logRequestMiddleware = Middleware::mapRequest(function (Request $request) {
+                $fileName = self::getRequestFileName($request);
+                Storage::put('/jira-client/requests/' . $fileName, $request->getBody()->getContents());
+
+                return $request;
+            });
+            $stack->push($logRequestMiddleware);
+        }
+
+        if (config('jira.log_response')) {
+            $logResponseMiddleware = ResponseLoggingMiddleware::logResponse();
+            $stack->push($logRequestMiddleware);
+        }
 
         return $stack;
     }

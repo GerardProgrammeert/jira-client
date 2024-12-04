@@ -11,6 +11,6 @@ class JiraClient extends Facade
 {
     public static function getFacadeAccessor(): string
     {
-        return Client::class; //todo
+        return Client::class;
     }
 }

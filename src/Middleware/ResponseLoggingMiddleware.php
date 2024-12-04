@@ -11,7 +11,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\RequestOptions;
 use Str;
-use Storage;
 
 class ResponseLoggingMiddleware {
 
@@ -20,12 +19,12 @@ class ResponseLoggingMiddleware {
         return Middleware::tap(
             null,
             function (RequestInterface $request, mixed $options, $promise) {
-                $promise->then(function(ResponseInterface $response) use ($request) {
-                    logger($response->getBody()->getContents());
-                    Storage::put(
+                $promise->then(function(ResponseInterface $respond) use ($request) {
+                   $result = \Storage::put(
                         '/jira-client/responses/' . self::getResponseFileName($request),
-                         $response->getBody()->getContents()
+                         $respond->getBody()->getContents()
                     );
+                   logger($result);
                 });
             }
         );

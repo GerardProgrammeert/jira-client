@@ -8,25 +8,21 @@ use Beezmaster\JiraClient\Exceptions\JiraClientBadRequest;
 use Beezmaster\JiraClient\Exceptions\JiraClientServerException;
 use Beezmaster\JiraClient\ResponsePayload\AbstractResponsePayload;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
-use Beezmaster\JiraClient\ResponsePayload\ResponsePayloadFactory;
-class Response
+
+class Response implements ResponseInterface
 {
-    public function __construct(
-        private readonly Request $request,
-        private readonly ResponseInterface $response,
-    )
+    public function __construct(private readonly ResponseInterface $response)
     {
         $this->handleStatus();
     }
 
-    public function getResponsePayload(): AbstractResponsePayload
+    public function getResponsePayload(): void
     {
-        return ResponsePayloadFactory::create($this->request, $this->response);
+        //todo create payload with a Factory for a Response payload
     }
 
-    public function getBody(): StreamInterface
+    public function getBody()
     {
         return $this->response->getBody();
     }
@@ -46,7 +42,7 @@ class Response
         return $this->response->getReasonPhrase();
     }
 
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->response->getHeaders();
     }
@@ -67,7 +63,7 @@ class Response
         $statusCode = $this->getStatusCode();
 
         match (true) {
-            $statusCode >= 400 && $statusCode <= 499 => throw new JiraClientBadRequest($this->getBody()->getContents()),
+            $statusCode >= 400 && $statusCode <= 499 => throw new JiraClientBadRequest($this->get,
             $statusCode >= 500 && $statusCode <= 599 => throw new JiraClientServerException(),
         };
 

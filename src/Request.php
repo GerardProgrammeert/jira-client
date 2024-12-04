@@ -12,8 +12,6 @@ use GuzzleHttp\RequestOptions;
 //@todo extend with PSR RequestInterfdace
 final class Request
 {
-    const string BASE_PATH = '/rest/api/3';
-
     public function __construct(
         private HttpMethod $method,
         private string $endpoint,
@@ -24,7 +22,7 @@ final class Request
 
     public function getUrl(): string
     {
-        $endpoint = self::BASE_PATH . $this->endpoint;
+        $endpoint = '/rest/api/3' . $this->endpoint;
         if (empty($this->path))
         {
             return $endpoint;

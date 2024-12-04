@@ -23,11 +23,11 @@ class JiraClient extends AbstractJiraClient
     {
     }
 
-    public function makeRequest(Request $request)
+    public function makeRequest(Request $request): ResponseInterface
     {
         $response = $this->client->request($request->getMethod(), $request->getUrl(), $request->getOptions());
 
-        return new Response($request, $response);
+        return new Response($response);
     }
 
     public function issue(): Issue
