@@ -7,7 +7,6 @@ namespace BeezMaster\JiraClient\Endpoints;
 use Beezmaster\JiraClient\AbstractJiraClient;
 
 class BaseEndpoint {
-
     public function __construct(protected readonly AbstractJiraClient $client)
     {
     }
